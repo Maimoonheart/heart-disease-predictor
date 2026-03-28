@@ -323,47 +323,95 @@
     font-family: var(--mono);
   }
 
-  @media (max-width: 600px) {
-    .page { padding: 32px 16px 80px; }
+  /* ── SMALL PHONES (iPhone SE, Galaxy A series) max 380px ── */
+  @media (max-width: 380px) {
+    .page { padding: 24px 12px 60px; }
+    h1 { font-size: 24px; }
+    .header { margin-bottom: 24px; padding-bottom: 20px; }
+    .header-desc { font-size: 13px; }
+    .clinical-badge { font-size: 10px; padding: 7px 10px; }
+    .form-grid { grid-template-columns: 1fr; gap: 16px; }
+    .field.span2 { grid-column: 1; }
+    .card { padding: 16px 12px; }
+    .section { margin-bottom: 24px; }
+    .section-title { font-size: 10px; }
+    label { font-size: 13px; }
+    input[type="number"], input[type="text"], select {
+      font-size: 16px; padding: 13px 12px;
+    }
+    .toggle-opt label { padding: 13px 8px; font-size: 14px; }
+    button[type="submit"] { padding: 18px; font-size: 16px; }
+    .result-label { font-size: 17px; }
+    .result-top { padding: 16px 12px; gap: 12px; }
+    .result-bottom { padding: 14px 12px; }
+    .prob-num { font-size: 17px; }
+    .result-indicator { width: 40px; height: 40px; font-size: 18px; }
+  }
 
+  /* ── REGULAR PHONES (iPhone 14, Galaxy S22, Pixel) 381px–600px ── */
+  @media (min-width: 381px) and (max-width: 600px) {
+    .page { padding: 32px 18px 80px; }
     h1 { font-size: 28px; }
-
     .header { margin-bottom: 32px; padding-bottom: 24px; }
     .header-desc { font-size: 14px; }
-
     .form-grid { grid-template-columns: 1fr; gap: 20px; }
     .field.span2 { grid-column: 1; }
-
     .card { padding: 20px 16px; }
     .section { margin-bottom: 28px; }
-
-    /* Bigger inputs for fingers */
-    input[type="number"],
-    input[type="text"],
-    select {
-      font-size: 17px;
-      padding: 15px 14px;
-    }
-
     label { font-size: 14px; }
-
-    /* Bigger toggle buttons */
-    .toggle-opt label {
-      padding: 15px 10px;
-      font-size: 15px;
+    input[type="number"], input[type="text"], select {
+      font-size: 17px; padding: 15px 14px;
     }
-
-    /* Bigger submit button */
-    button[type="submit"] {
-      padding: 20px;
-      font-size: 17px;
-    }
-
-    /* Result panel */
+    .toggle-opt label { padding: 15px 10px; font-size: 15px; }
+    button[type="submit"] { padding: 20px; font-size: 17px; }
     .result-label { font-size: 19px; }
     .result-top { padding: 20px 16px; gap: 14px; }
     .result-bottom { padding: 16px; }
     .prob-num { font-size: 18px; }
+  }
+
+  /* ── LARGE PHONES (Samsung S22 Ultra, iPhone Pro Max) 601px–768px ── */
+  @media (min-width: 601px) and (max-width: 768px) {
+    .page { padding: 40px 28px 80px; }
+    h1 { font-size: 32px; }
+    .form-grid { grid-template-columns: 1fr 1fr; gap: 20px 24px; }
+    .card { padding: 24px 20px; }
+    label { font-size: 13px; }
+    input[type="number"], input[type="text"], select {
+      font-size: 16px; padding: 14px 14px;
+    }
+    .toggle-opt label { padding: 14px 10px; font-size: 15px; }
+    button[type="submit"] { padding: 18px; font-size: 17px; }
+    .result-label { font-size: 20px; }
+  }
+
+  /* ── TABLETS (iPad, Galaxy Tab) 769px–1024px ── */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .page { padding: 48px 40px 100px; }
+    h1 { font-size: 34px; }
+    .form-grid { grid-template-columns: 1fr 1fr; gap: 22px 28px; }
+    .card { padding: 28px 24px; }
+    input[type="number"], input[type="text"], select {
+      font-size: 16px; padding: 13px 16px;
+    }
+    button[type="submit"] { padding: 18px; font-size: 16px; }
+  }
+
+  /* ── LARGE DESKTOP 1280px+ ── */
+  @media (min-width: 1280px) {
+    .page { max-width: 860px; padding: 64px 40px 120px; }
+    h1 { font-size: 40px; }
+    .header-desc { font-size: 16px; }
+    .form-grid { gap: 28px 36px; }
+    .card { padding: 32px; }
+    label { font-size: 14px; }
+    input[type="number"], input[type="text"], select {
+      font-size: 17px; padding: 14px 18px;
+    }
+    .toggle-opt label { padding: 14px 12px; font-size: 15px; }
+    button[type="submit"] { padding: 19px; font-size: 17px; }
+    .result-label { font-size: 24px; }
+    .prob-num { font-size: 22px; }
   }
 </style>
 </head>
