@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CardioRisk | Clinical Assessment</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:        #00d4c8;
+    --teal-mid:    #00a89f;
+    --teal-dim:    rgba(0,212,200,0.12);
+    --teal-border: rgba(0,212,200,0.25);
+    --red:         #ff4060;
+    --green:       #00e5a0;
+    --bg:          #070f1a;
+    --surface:     #0d1e2e;
+    --border:      rgba(255,255,255,0.07);
+    --text:        #d6eaf0;
+    --muted:       #5a7f94;
+    --mono:        'DM Mono', monospace;
+    --sans:        'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 56px 28px 100px;
+  }
+
+  /* HEADER */
+  .header {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--teal);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: var(--sans);
+    font-size: 36px;
+    font-weight: 600;
+    color: #e8f5f8;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+
+  .header-desc {
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 520px;
+    line-height: 1.6;
+  }
+
+  .clinical-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    padding: 8px 14px;
+    border: 1px solid var(--teal-border);
+    border-radius: 4px;
+    background: var(--teal-dim);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 1px;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,212,200,0.4); }
+    50%       { opacity: 0.7; box-shadow: 0 0 0 4px rgba(0,212,200,0); }
+  }
+
+  /* SECTION */
+  .section { margin-bottom: 36px; }
+
+  .section-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 28px 24px;
+  }
+
+  /* FORM GRID */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 28px;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field.span2 { grid-column: 1 / -1; }
+
+  label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.3px;
+  }
+
+  input[type="number"],
+  input[type="text"],
+  select {
+    background: var(--bg);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 16px;
+    padding: 13px 16px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.18s, box-shadow 0.18s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  input:focus, select:focus {
+    border-color: var(--teal-mid);
+    box-shadow: 0 0 0 3px rgba(0,212,200,0.09);
+  }
+
+  input::placeholder { color: #2a4555; }
+  select option { background: #0d1e2e; }
+
+  /* TOGGLE RADIO */
+  .toggle {
+    display: flex;
+    background: var(--bg);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .toggle-opt { flex: 1; position: relative; }
+  .toggle-opt input[type="radio"] {
+    position: absolute; opacity: 0; pointer-events: none;
+  }
+
+  .toggle-opt label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: background 0.15s, color 0.15s;
+    letter-spacing: 0.3px;
+  }
+
+  .toggle-opt:not(:last-child) label {
+    border-right: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .toggle-opt input[type="radio"]:checked + label {
+    background: var(--teal-dim);
+    color: var(--teal);
+  }
+
+  /* SUBMIT */
+  .submit-wrap { margin-top: 36px; }
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 17px;
+    background: var(--teal);
+    border: none;
+    border-radius: 7px;
+    color: #060d14;
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background 0.18s, box-shadow 0.18s;
+  }
+
+  button[type="submit"]:hover {
+    background: #00bfb4;
+    box-shadow: 0 4px 24px rgba(0,212,200,0.25);
+  }
+
+  /* RESULT */
+  .result {
+    margin-top: 32px;
+    border-radius: 8px;
+    border: 1px solid;
+    overflow: hidden;
+    animation: rise 0.4s ease;
+  }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+
+  .result.high { border-color: rgba(255,64,96,0.4); }
+  .result.low  { border-color: rgba(0,229,160,0.35); }
+
+  .result-top {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 24px 28px;
+  }
+
+  .result.high .result-top { background: rgba(255,64,96,0.08); }
+  .result.low  .result-top { background: rgba(0,229,160,0.06); }
+
+  .result-indicator {
+    width: 48px; height: 48px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .result.high .result-indicator { background: rgba(255,64,96,0.15); }
+  .result.low  .result-indicator { background: rgba(0,229,160,0.12); }
+
+  .result-label {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .result.high .result-label { color: var(--red); }
+  .result.low  .result-label { color: var(--green); }
+
+  .result-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  .result-bottom {
+    padding: 20px 28px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .prob-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+
+  .prob-text { font-size: 14px; color: var(--muted); }
+
+  .prob-num {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .result.high .prob-num { color: var(--red); }
+  .result.low  .prob-num { color: var(--green); }
+
+  .bar-track {
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    animation: grow 1s ease forwards;
+  }
+
+  @keyframes grow { from { width: 0 !important; } }
+
+  .result.high .bar-fill { background: var(--red); }
+  .result.low  .bar-fill { background: var(--green); }
+
+  /* ERROR BANNER */
+  .error-banner {
+    margin-top: 20px;
+    padding: 14px 18px;
+    background: rgba(255,64,96,0.08);
+    border: 1px solid rgba(255,64,96,0.3);
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--red);
+    font-family: var(--mono);
+  }
+
+  @media (max-width: 560px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .field.span2 { grid-column: 1; }
+    h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  
+  <div class="header">
+    <div class="header-eyebrow">Cardiac Risk Assessment</div>
+    <h1>Heart Disease<br>Risk Predictor</h1>
+    <p class="header-desc">Enter clinically obtained patient values to generate a multivariate cardiac event risk score.</p>
+    <div class="clinical-badge">
+      <div class="badge-dot"></div>
+      Clinical use only — not for self-diagnosis
+    </div>
+  </div>
+
+  <form method="POST" id="riskForm">
+    {% csrf_token %}
+
+    
+    <div class="section">
+      <div class="section-title">Patient Demographics</div>
+      <div class="card">
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" placeholder="e.g. 55" min="1" max="120" required>
+          </div>
+
+          <div class="field">
+            <label>Biological Sex</label>
+            <div class="toggle">
+              <div class="toggle-opt">
+                <input type="radio" name="sex" id="sex-m" value="1" checked>
+                <label for="sex-m">Male</label>
+              </div>
+              <div class="toggle-opt">
+                <input type="radio" name="sex" id="sex-f" value="0">
+                <label for="sex-f">Female</label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="section">
+      <div class="section-title">Clinical Measurements</div>
+      <div class="card">
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="trestbps">Resting BP (mmHg)</label>
+            <input type="number" id="trestbps" name="trestbps" placeholder="e.g. 120" required>
+          </div>
+
+          <div class="field">
+            <label for="chol">Serum Cholesterol (mg/dL)</label>
+            <input type="number" id="chol" name="chol" placeholder="e.g. 200" required>
+          </div>
+
+          <div class="field">
+            <label for="thalach">Max Heart Rate (bpm)</label>
+            <input type="number" id="thalach" name="thalach" placeholder="e.g. 150" required>
+          </div>
+
+          <div class="field">
+            <label for="oldpeak">ST Depression</label>
+            <input type="number" id="oldpeak" name="oldpeak" placeholder="e.g. 1.0" step="0.1" required>
+          </div>
+
+          <div class="field">
+            <label>Fasting Blood Sugar &gt; 120 mg/dL</label>
+            <div class="toggle">
+              <div class="toggle-opt">
+                <input type="radio" name="fbs" id="fbs-y" value="1">
+                <label for="fbs-y">Yes</label>
+              </div>
+              <div class="toggle-opt">
+                <input type="radio" name="fbs" id="fbs-n" value="0" checked>
+                <label for="fbs-n">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Exercise-Induced Angina</label>
+            <div class="toggle">
+              <div class="toggle-opt">
+                <input type="radio" name="exang" id="exang-y" value="1">
+                <label for="exang-y">Yes</label>
+              </div>
+              <div class="toggle-opt">
+                <input type="radio" name="exang" id="exang-n" value="0" checked>
+                <label for="exang-n">No</label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+   
+    <div class="section">
+      <div class="section-title">Diagnostic Profile</div>
+      <div class="card">
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="cp">Chest Pain Type</label>
+            <select id="cp" name="cp" required>
+              <option value="" disabled selected>Select type</option>
+              <option value="0">Typical Angina</option>
+              <option value="1">Atypical Angina</option>
+              <option value="2">Non-Anginal Pain</option>
+              <option value="3">Asymptomatic</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="restecg">Resting ECG Result</label>
+            <select id="restecg" name="restecg" required>
+              <option value="" disabled selected>Select result</option>
+              <option value="0">Normal</option>
+              <option value="1">ST-T Wave Abnormality</option>
+              <option value="2">LV Hypertrophy</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="slope">ST Slope</label>
+            <select id="slope" name="slope" required>
+              <option value="" disabled selected>Select slope</option>
+              <option value="0">Upsloping</option>
+              <option value="1">Flat</option>
+              <option value="2">Downsloping</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="ca">Fluoroscopy Vessels (0–3)</label>
+            <select id="ca" name="ca" required>
+              <option value="" disabled selected>Select count</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+
+          <div class="field span2">
+            <label for="thal">Thalassemia</label>
+            <select id="thal" name="thal" required>
+              <option value="" disabled selected>Select status</option>
+              <option value="1">Normal</option>
+              <option value="2">Fixed Defect</option>
+              <option value="3">Reversible Defect</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-wrap">
+      <button type="submit">Run Risk Analysis</button>
+    </div>
+  </form>
+
+ 
+  {% if prediction %}
+  <div class="result {{ risk_level }}">
+    <div class="result-top">
+      <div class="result-indicator">
+        {% if risk_level == "high" %}⚠{% else %}✓{% endif %}
+      </div>
+      <div>
+        <div class="result-label">{{ prediction }}</div>
+        <div class="result-note">Requires clinical interpretation — not a standalone diagnosis</div>
+      </div>
+    </div>
+    <div class="result-bottom">
+      <div class="prob-row">
+        <span class="prob-text">Cardiac Risk Probability</span>
+        <span class="prob-num">{{ probability }}%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width: {{ probability }}%"></div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+</body>
+</html>

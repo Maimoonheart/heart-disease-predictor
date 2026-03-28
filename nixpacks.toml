@@ -1,0 +1,4 @@
+[phases.build] 
+cmds = ["pip install -r requirements.txt"] 
+[start] 
+cmd = "gunicorn heart.wsgi" 
