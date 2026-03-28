@@ -28,8 +28,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://web-production-fc9a0.up.railway.app',
-    'http://web-production-fc9a0.up.railway.app',
+    'https://web-production-b3195.up.railway.app',
 ]
 CSRF_COOKIE_SECURE = False
 # Application definition
